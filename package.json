@@ -1,0 +1,50 @@
+{
+  "name": "generator-mboy-gulp",
+  "version": "1.0.0",
+  "description": "Generate the Monkee-Boy gulp setup.",
+  "homepage": "https://github.com/Monkee-Boy/generator-mboy-gulp",
+  "author": {
+    "name": "James Fleeting",
+    "email": "james@monkee-boy.com",
+    "url": "https://www.monkee-boy.com"
+  },
+  "files": [
+    "generators"
+  ],
+  "main": "generators/index.js",
+  "keywords": [
+    "",
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.23.0",
+    "chalk": "^1.0.0",
+    "yosay": "^1.0.0"
+  },
+  "devDependencies": {
+    "yeoman-test": "^1.0.0",
+    "yeoman-assert": "^2.0.0",
+    "eslint": "^3.1.1",
+    "eslint-config-xo-space": "^0.14.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^2.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-line-ending-corrector": "^1.0.1",
+    "gulp-istanbul": "^1.0.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0"
+  },
+  "eslintConfig": {
+    "extends": "xo-space",
+    "env": {
+      "mocha": true
+    }
+  },
+  "repository": "Monkee-Boy/generator-mboy-gulp",
+  "scripts": {
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "MIT"
+}
