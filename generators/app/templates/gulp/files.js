@@ -32,7 +32,6 @@ var globs = {
   js: {
     src: [
       paths.components.babelpolyfill + 'polyfill.js',
-      paths.js.src + 'wellness.js',
       paths.js.src + 'main.js'
     ],
     dist: {
@@ -40,18 +39,6 @@ var globs = {
       minified: 'app.min.js'
     },
     jshint: '.jshintrc'
-  },
-  js_map: {
-    src: [
-      paths.components.svgmarker + 'SVGMarker.js',
-      paths.components.datepicker + 'datepicker.min.js',
-      paths.js.src + 'map-search.js',
-      paths.js.src + 'map-location.js'
-    ],
-    dist: {
-      original: 'map.js',
-      minified: 'map.min.js'
-    }
   },
   css: {
     raw: [

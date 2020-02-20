@@ -31,8 +31,6 @@ var config = require('./gulp/config.json'),
     svgSymbols = require('gulp-svg-symbols'),
     babel = require('gulp-babel');
 
-gulp.task('default', ['sprite', 'css', 'js']);
-
 gulp.task('watch', function () {
   watch(files.paths.css.src + '**/*.css', batch(function (events, done) {
       gulp.start('css', done);
@@ -54,35 +52,54 @@ gulp.task('images', function () {
     .pipe(gulp.dest(files.paths.images.dist));
 });
 
-gulp.task('compile-sprite', ['images'], function () {
+gulp.task('compile-sprite', gulp.series('images'), function () {
   return gulp.src(files.globs.sprites.src)
     .pipe(svgSymbols())
     .pipe(gulp.dest(files.globs.sprites.dist));
 });
 
-gulp.task('process-sprite-move', ['compile-sprite'], function () {
+gulp.task('process-sprite-move', gulp.series('compile-sprite'), function () {
   return gulp.src(files.globs.sprite.src)
     .pipe(rename(files.globs.sprite.dist))
     .pipe(gulp.dest(files.paths.sprite.dist));
 });
 
-gulp.task('process-sprite-del', ['compile-sprite', 'process-sprite-move'], function () {
+gulp.task('process-sprite-del', gulp.series('compile-sprite', 'process-sprite-move'), function () {
   return del(files.globs.sprites.dist);
 });
 
-gulp.task('sprite', ['compile-sprite', 'process-sprite-move', 'process-sprite-del'], function () {
-  return;
-});
-
-gulp.task('lint-css', function () {
-  return;
-
+gulp.task('lint-css', function (done) {
+  done();
   // return gulp.src(files.globs.css.raw)
-  //   .pipe(sourcemaps.init())
-  //   .pipe(stylelint(config.stylelint));
+  //   .pipe(stylelint(config.stylelint, {
+  //     reporters: [{
+  //       formatter: 'string', 
+  //       console: true}
+  //     ]}));
 });
 
-gulp.task('css', ['lint-css'], function () {
+gulp.task('lint-js', function() {
+  return gulp.src(files.paths.js.src)
+    .pipe(jshint(files.paths.js.jshint + files.globs.js.jshint))
+    .pipe(jshint.reporter(config.jshint_reporter));
+});
+
+gulp.task('sprite', gulp.series('compile-sprite', 'process-sprite-move', 'process-sprite-del'));
+
+gulp.task('js', gulp.series('lint-js', function js() {
+  return gulp.src(files.globs.js.src)
+    .pipe(sourcemaps.init())
+    .pipe(babel(config.babel))
+    .pipe(concat(files.globs.js.dist.original))
+    .pipe(gulp.dest(files.paths.js.dist))
+    .pipe(rename(files.globs.js.dist.minified))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(files.paths.js.dist))
+    .pipe(sizereport());
+}));
+
+gulp.task('css', gulp.series('lint-css', function css() {
   var processors = [
     atImport(),
     map({ basePath: files.paths.css.maps, maps: files.globs.css.maps }),
@@ -106,42 +123,6 @@ gulp.task('css', ['lint-css'], function () {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(files.paths.css.dist))
     .pipe(sizereport());
-});
+}));
 
-gulp.task('lint-js', function() {
-  return gulp.src(files.globs.js.src)
-    .pipe(jshint(files.paths.js.jshint + files.globs.js.jshint))
-    .pipe(jshint.reporter(config.jshint_reporter));
-});
-
-gulp.task('js', ['js-map', 'lint-js'], function() {
-  return gulp.src(files.globs.js.src)
-    .pipe(sourcemaps.init())
-    .pipe(babel(config.babel))
-    .pipe(concat(files.globs.js.dist.original))
-    .pipe(gulp.dest(files.paths.js.dist))
-    .pipe(rename(files.globs.js.dist.minified))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(files.paths.js.dist))
-    .pipe(sizereport());
-});
-
-gulp.task('lint-js-map', function() {
-  return gulp.src(files.globs.js_map.src)
-    .pipe(jshint(files.paths.js.jshint + files.globs.js.jshint))
-    .pipe(jshint.reporter(config.jshint_reporter));
-});
-
-gulp.task('js-map', ['lint-js-map'], function() {
-  return gulp.src(files.globs.js_map.src)
-    .pipe(sourcemaps.init())
-    .pipe(babel(config.babel))
-    .pipe(concat(files.globs.js_map.dist.original))
-    .pipe(gulp.dest(files.paths.js.dist))
-    .pipe(rename(files.globs.js_map.dist.minified))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(files.paths.js.dist))
-    .pipe(sizereport());
-});
+gulp.task('default', gulp.series('sprite', 'css', 'js'));

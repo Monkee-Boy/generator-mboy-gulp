@@ -1,7 +1,5 @@
 /*
- * Donor-Portal CSS
- *
- * Prefix with `wrbdp-`
+ * CSS, using Post-CSS
  */
 
 @import "../../node_modules/js-datepicker/dist/datepicker.min.css";
