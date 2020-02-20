@@ -1,0 +1,7 @@
+{
+  "name": "<%= projectName %>",
+  "version": "1.0.0",
+  "description": "Generate the Monkee-Boy gulp setup.",
+  "homepage": "<%= repoUrl %>",
+  "license": "MIT"
+}
