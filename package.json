@@ -9,7 +9,7 @@
     "url": "https://www.monkee-boy.com"
   },
   "files": [
-    "generators"
+    "app"
   ],
   "main": "generators/index.js",
   "keywords": [
@@ -17,8 +17,9 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.23.0",
     "chalk": "^1.0.0",
+    "npm": "^6.13.7",
+    "yeoman-generator": "^1.00.0",
     "yosay": "^1.0.0"
   },
   "devDependencies": {
@@ -43,7 +44,6 @@
   },
   "repository": "Monkee-Boy/generator-mboy-gulp",
   "scripts": {
-    "prepublish": "gulp prepublish",
     "test": "gulp"
   },
   "license": "MIT"
