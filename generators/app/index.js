@@ -5,6 +5,7 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 var remote = require('yeoman-remote');
 var s = require("underscore.string");
+var mkdirp = require('mkdirp');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -69,14 +70,26 @@ module.exports = class extends Generator {
   writing() {
     const self = this;
     
-    self.fs.copyTpl(
-      self.templatePath('package.json'),
-      self.destinationPath('package.json'),
+    // Copy and fill in package.json
+    self.fs.copyTpl(self.templatePath('package.json'), self.destinationPath('package.json'),
       { 
         projectName: self.answers.projectName, 
         repoUrl: self.answers.repoUrl
       }
     );
+
+    // Copy gulpfile and gulp-related files and folders
+    self.fs.copy(self.templatePath('gulpfile.js'), self.destinationPath('gulpfile.js'));
+    self.fs.copy(self.templatePath('gulp'), self.destinationPath('gulp'));
+    self.fs.copy(self.templatePath('css'), self.destinationPath('css'));
+    self.fs.copy(self.templatePath('js'), self.destinationPath('js'));
+    
+    // Have to make images because they're initially empty
+    mkdirp.sync(this.destinationPath('images/src'));
+    mkdirp.sync(this.destinationPath('images/dist'));
+    
+    self.fs.copy(self.templatePath('.jshintrc'), self.destinationPath('.jshintrc'));
+    
   }
 
   install() {

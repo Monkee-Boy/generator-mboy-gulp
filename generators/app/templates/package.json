@@ -4,6 +4,10 @@
   "description": "Generate the Monkee-Boy gulp setup.",
   "homepage": "<%= repoUrl %>",
   "author": "Monkee-Boy",
+  "scripts": {
+    "build": "yarn && gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "devDependencies": {
     "@defvayne23/svg-marker": "^0.8.1",
     "autoprefixer": "^7.2.6",

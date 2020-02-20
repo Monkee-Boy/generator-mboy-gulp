@@ -1,0 +1,9 @@
+large-desktop: 1320px
+desktop: 1220px
+small-desktop: 1100px
+tablet: 1024px
+mobile: 768px
+mobile-forms: 640px
+small: 600px
+tiny: 430px
+very-small: 360px

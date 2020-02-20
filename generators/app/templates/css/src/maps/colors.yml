@@ -1,0 +1,15 @@
+black:
+  lightest: '#a6a6a6'
+  lighter: '#75787b'
+  base: '#53565a'
+  darker: '#414447'
+  darkest: '#000'
+white:
+  base: '#fff'
+  darker: '#f1f1f1'
+  darkest: '#c8c9c7'
+blue:
+  lighter: '#6eb2ca'
+  base: '#00416b'
+red:
+  base: '#e7694f'
