@@ -64,11 +64,6 @@ module.exports = class extends Generator {
       default: 'git@bitbucket.org:monkeeboy/PROJECTREPONAME.git'
     }]);
 
-    // return self.prompt(prompts).then(function (props) {
-    //   self.props = props;
-    //   self.props.projectName = s.slugify(props.projectName);
-    // }.bind(self));
-
   }
 
   writing() {
@@ -85,14 +80,12 @@ module.exports = class extends Generator {
   }
 
   install() {
+    this.installDependencies({
+      yarn: true,
+      bower: false,
+      npm: false,
+    });
     this.log('\nYour gulp files and structure are ready.\n' + chalk.green('May the code be with you.'));
   }
 
-  // method1() {
-  //   this.log('method 1 just ran');
-  // }
-
-  // method2() {
-  //   this.log('method 2 just ran');
-  // }
 }
